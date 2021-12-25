@@ -2,7 +2,11 @@
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
-arrOfStrings = openSomehowPythonInterpreter("~/NLP.py", "processParagraph(text)");
+var tag = document.getElementsByTagName("p")[0];
+text = tag.innerHTML;
+// Here I would like to call the Python interpreter with Python function
+arrOfStrings = openSomehowPythonInterpreter("~/pythoncode.py", "processParagraph(text)");
+
 /* global document, Office, Word */
 
 Office.onReady((info) => {
