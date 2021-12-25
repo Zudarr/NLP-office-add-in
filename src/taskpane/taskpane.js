@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
-var arrOfStrings[] = openSomehowPythonInterpreter("~/pythoncode.py", "processParagraph(text)");
+arrOfStrings = openSomehowPythonInterpreter("~/NLP.py", "processParagraph(text)");
 /* global document, Office, Word */
 
 Office.onReady((info) => {
