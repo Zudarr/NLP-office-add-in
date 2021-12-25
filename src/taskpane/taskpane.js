@@ -2,10 +2,6 @@
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
-var tag = document.getElementsByTagName("p")[0];
-text = tag.innerHTML;
-// Here I would like to call the Python interpreter with Python function
-arrOfStrings = openSomehowPythonInterpreter("~/pythoncode.py", "processParagraph(text)");
 
 /* global document, Office, Word */
 
@@ -17,8 +13,6 @@ Office.onReady((info) => {
 
   // Assign event handlers and other initialization logic.
   document.getElementById("insert-paragraph").onclick = insertParagraph;
-  document.getElementById("apply-style").onclick = applyStyle;
-  document.getElementById("apply-custom-style").onclick = applyCustomStyle;
   document.getElementById("change-font").onclick = changeFont;
   document.getElementById("read-doc").onclick = readDoc;
   if (info.host === Office.HostType.Word) {
@@ -34,34 +28,6 @@ function insertParagraph() {
       "Office has several versions, including Office 2016, Microsoft 365 subscription, and Office on the web.",
       "Start"
     );
-
-    return context.sync();
-  }).catch(function (error) {
-    console.log("Error: " + error);
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
-  });
-}
-
-function applyStyle() {
-  Word.run(function (context) {
-    var firstParagraph = context.document.body.paragraphs.getFirst();
-    firstParagraph.styleBuiltIn = Word.Style.intenseReference;
-
-    return context.sync();
-  }).catch(function (error) {
-    console.log("Error: " + error);
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
-  });
-}
-
-function applyCustomStyle() {
-  Word.run(function (context) {
-    var lastParagraph = context.document.body.paragraphs.getLast();
-    lastParagraph.style = "MyCustomStyle";
 
     return context.sync();
   }).catch(function (error) {
