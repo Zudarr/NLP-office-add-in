@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
-
+var arrOfStrings[] = openSomehowPythonInterpreter("~/pythoncode.py", "processParagraph(text)");
 /* global document, Office, Word */
 
 Office.onReady((info) => {
@@ -16,6 +16,7 @@ Office.onReady((info) => {
   document.getElementById("apply-style").onclick = applyStyle;
   document.getElementById("apply-custom-style").onclick = applyCustomStyle;
   document.getElementById("change-font").onclick = changeFont;
+  document.getElementById("read-doc").onclick = readDoc;
   if (info.host === Office.HostType.Word) {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
@@ -75,6 +76,22 @@ function changeFont() {
       bold: true,
       size: 18,
     });
+
+    return context.sync();
+  }).catch(function (error) {
+    console.log("Error: " + error);
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
+}
+
+function readDoc() {
+  Word.run(function (context) {
+    //var paragraph = context.document.body.paragraphs;
+    var doc = context.document;
+    var originalRange = doc.getSelection();
+    originalRange.insertText(" (C2R)", "End");
 
     return context.sync();
   }).catch(function (error) {
