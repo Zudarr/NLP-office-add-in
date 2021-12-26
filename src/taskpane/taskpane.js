@@ -14,7 +14,7 @@ Office.onReady((info) => {
   // Assign event handlers and other initialization logic.
   document.getElementById("insert-paragraph").onclick = insertParagraph;
   document.getElementById("change-font").onclick = changeFont;
-  document.getElementById("read-doc").onclick = readDoc;
+  document.getElementById("insert-table").onclick = insertTable;
   if (info.host === Office.HostType.Word) {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
@@ -56,18 +56,23 @@ function changeFont() {
   });
 }
 
-function readDoc() {
+function insertTable() {
   Word.run(function (context) {
-    //var paragraph = context.document.body.paragraphs;
-    var doc = context.document;
-    var originalRange = doc.getSelection();
-    originalRange.insertText(" (C2R)", "End");
+    var secondParagraph = context.document.body.paragraphs.getFirst().getNext();
+    var tableData = [
+      ["Name", "ID", "Birth City"],
+      ["Bob", "434", "Chicago"],
+      ["Sue", "719", "Havana"],
+  ];
+    secondParagraph.insertTable(3, 3, "After", tableData);
 
     return context.sync();
-  }).catch(function (error) {
-    console.log("Error: " + error);
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
-  });
+  })
+    .catch(function (error) {
+      console.log("Error: " + error);
+      if (error instanceof OfficeExtension.Error) {
+        console.log("Debug info: " + JSON.stringify(error.debugInfo));
+      }
+    });
 }
+
