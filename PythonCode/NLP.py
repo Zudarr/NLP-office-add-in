@@ -19,7 +19,8 @@ with open ("vi-stopwords.txt",encoding= 'UTF-8') as file_in:
 punc = list(punctuation)
 #Xử lý dữ liệu tiếng việt qua thư viện
 with open("text.txt" ,encoding='UTF8') as file:
-    Data = file.read()
+    Data = file.read() #input, Biến tên Data là input của cả bài toán
+      
 file.close()
 
 
@@ -46,7 +47,7 @@ for punc in Data_punc:
     if(punc == '.'):
         countSentence +=1
 print('Number of sentences: ', countSentence)
-print('Total wordl count:', len(Data_NonPunc))
+print('Total word count:', len(Data_NonPunc))
 
 Data_NonStopWord = Data_split
 for word in Data_NonStopWord:
@@ -157,3 +158,44 @@ word_cloud = wordcloud.WordCloud(max_words=100,background_color ="black",
 plt.axis("off")
 plt.imshow(word_cloud)
 word_cloud.to_file("wordcloud.png")
+
+
+#output
+dcitOut = {
+    "NumParagraph" : countParagraph,
+    "NumSentence" : countSentence,
+    "NumWord" : len(Data_NonPunc),
+    "NumWord_NonSTW": len(Data_NonStopWord),
+    "NumWord_Diff": len(Data_UnIdentical),
+    "NumWord_Diff_NonSTW": len(Data_NonStw_UnIdentical),
+    "WordPerSent": round(len(Data_NonPunc)/countSentence, 2),
+    "NumChar":len(Data_temp),
+    "NumChar_NonPunc": len(Data_temp1),
+    "CharPerWord": round(len(Data_temp1)/len(Data_NonPunc),2),
+    "NumSac": sac,
+    "NumHuyen": huyen,
+    "NumHoi": hoi,
+    "NumNga": nga,
+    "NumNang": nang,
+    "LongWord": countLong,
+    "NumAdj": Tag.count('A'),
+    "NumCoordinate": Tag.count('C'),
+    "NumPrep": Tag.count('E'),
+    "NumInterject": Tag.count('I'),
+    "NumDeter":Tag.count('L'),
+    "NumNumeral": Tag.count('M'),
+    "NumNoun": Tag.count('N'),
+    "NumNoun_classifier":Tag.count('Nc'),
+    "NumNoun_abberev": Tag.count('Ny'),
+    "NumNoun_prop":Tag.count('Np'),
+    "NumNoun_unit":Tag.count('Nu'),
+    "NumPronoun":Tag.count('P'),
+    "NumAdv":Tag.count('R'),
+    "NumSubor":Tag.count('S'),
+    "NumAu_Modal":Tag.count('T'),
+    "NumVerb":Tag.count('V'),
+    "NumUnknown":Tag.count('X'),
+    "NumPunc":Tag.count('F'),
+    "WordCloud": word_cloud.to_file("wordcloud.png"),
+
+}
