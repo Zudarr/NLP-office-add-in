@@ -15,6 +15,7 @@ Office.onReady((info) => {
   document.getElementById("insert-paragraph").onclick = insertParagraph;
   document.getElementById("change-font").onclick = changeFont;
   document.getElementById("insert-table").onclick = insertTable;
+  document.getElementById("test").onclick = test;
   if (info.host === Office.HostType.Word) {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
@@ -76,3 +77,6 @@ function insertTable() {
     });
 }
 
+function test(){
+  
+}
