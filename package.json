@@ -29,6 +29,9 @@
     "core-js": "^3.9.1",
     "regenerator-runtime": "^0.13.7"
   },
+  "browser":{
+    "child_process": false
+  },  
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.12.11",
@@ -63,4 +66,5 @@
   "browserslist": [
     "ie 11"
   ]
+  
 }

@@ -7,6 +7,7 @@ import string
 import wordcloud
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 
 #Lấy danh sách stopword tiếng việt
@@ -18,9 +19,7 @@ with open ("vi-stopwords.txt",encoding= 'UTF-8') as file_in:
     file_in.close()
 punc = list(punctuation)
 #Xử lý dữ liệu tiếng việt qua thư viện
-with open("text.txt" ,encoding='UTF8') as file:
-    Data = file.read()
-file.close()
+Data = sys.argv[1]
 
 
 text_lower = Data.lower()#chuyển data sang viết thường toàn bộ
@@ -39,45 +38,33 @@ for word in Data_NonPunc:
     if(word=='\n'):
         Data_NonPunc.remove(word)
         countParagraph +=1
-print('Number of paragraphs: ', countParagraph)
 
 countSentence = 0
 for punc in Data_punc:
     if(punc == '.'):
         countSentence +=1
-print('Number of sentences: ', countSentence)
-print('Total wordl count:', len(Data_NonPunc))
 
 Data_NonStopWord = Data_split
 for word in Data_NonStopWord:
     if(word in stop_word):
         Data_NonStopWord.remove(word)
 
-print('Word count (Excluding common word): ', len(Data_NonStopWord))
 
 Data_UnIdentical =[]
 for word in Data_NonPunc:
     if(word not in Data_UnIdentical):
         Data_UnIdentical.append(word)
-print('Number of different word: ',len(Data_UnIdentical))
 
 Data_NonStw_UnIdentical =[]
 for word in Data_NonStopWord:
     if(word not in Data_NonStw_UnIdentical):
         Data_NonStw_UnIdentical.append(word)
-print('Different words (Excluding common words):', len(Data_NonStw_UnIdentical))
-
-print('Words per sentence: ',round(len(Data_NonPunc)/countSentence, 2) )
 
 Data_temp = ViUtils.remove_accents(Data_main).decode("utf-8")
 for i in string.punctuation:
     Data_temp1 = Data_temp.replace(i,"")
 
 Data_temp = Data_temp.replace(" ","")
-
-print('Number of characters (All):',len(Data_temp))
-print('Number of characters (Non punctuation):',len(Data_temp1))
-print('Characters per word: ',round(len(Data_temp1)/len(Data_NonPunc),2))
 
 accents1 =list('áéóúíýấắếứốớ')
 accents2 = list('àèòùìỳầằềừồờ')
@@ -103,17 +90,11 @@ for word in Data_main:
         nga +=1
     if (word in accents5):
         nang +=1
-print('So dau sac: ', sac)
-print('So dau huyen: ', huyen)
-print('So dau hoi: ', hoi)
-print('So dau nga: ', nga)
-print('So dau nang: ', nang)
 
 countLong = 0
 for word in Data_NonPunc:
     if(len(word)>=5):
         countLong +=1
-print ('Number of long word (Have more than 5 character): ', countLong)
 
 lenWord =[]
 for word in Data_split:
@@ -131,29 +112,43 @@ for i in sorted(lenWord):
 Temp =  ViPosTagger.postagging(text_token)
 Tag = Temp[1]
 
-print('Number of Adjective: ', Tag.count('A'))
-print('Number of Coordinating conjunction: ', Tag.count('C'))
-print('Number of Preposition: ', Tag.count('E'))
-print('Number of Interjection: ', Tag.count('I'))
-print('Number of Determiner: ', Tag.count('L'))
-print('Number of Numeral: ', Tag.count('M'))
-print('Number of Common noun: ', Tag.count('N'))
-print('Number of Noun Classifier: ', Tag.count('Nc'))
-print('Number of Noun abbreviation: ', Tag.count('Ny'))
-print('Number of Proper noun: ', Tag.count('Np'))
-print('Number of Unit noun: ', Tag.count('Nu'))
-print('Number of Pronoun: ', Tag.count('P'))
-print('Number of Adverb: ', Tag.count('R'))
-print('Number of Subordinating conjunction: ', Tag.count('S'))
-print('Number of Auxiliary, modal words: ', Tag.count('T'))
-print('Number of Verb: ', Tag.count('V'))
-print('Number of Unknown: ', Tag.count('X'))
-print('Number of Filtered out (punctuation): ', Tag.count('F'))
 
-cloud = np.array(Data_NonStopWord).flatten()
-plt.figure(figsize=(20,10))
-word_cloud = wordcloud.WordCloud(max_words=100,background_color ="black",
-                               width=2000,height=1000,mode="RGB").generate(str(cloud))
-plt.axis("off")
-plt.imshow(word_cloud)
-word_cloud.to_file("wordcloud.png")
+#output
+dcitOut = {
+    "NumParagraph" : countParagraph,
+    # "NumSentence" : countSentence,
+    # "NumWord" : len(Data_NonPunc),
+    # "NumWord_NonSTW": len(Data_NonStopWord),
+    # "NumWord_Diff": len(Data_UnIdentical),
+    # "NumWord_Diff_NonSTW": len(Data_NonStw_UnIdentical),
+    # "WordPerSent": round(len(Data_NonPunc)/countSentence, 2),
+    # "NumChar":len(Data_temp),
+    # "NumChar_NonPunc": len(Data_temp1),
+    # "CharPerWord": round(len(Data_temp1)/len(Data_NonPunc),2),
+    # "NumSac": sac,
+    # "NumHuyen": huyen,
+    # "NumHoi": hoi,
+    # "NumNga": nga,
+    # "NumNang": nang,
+    # "LongWord": countLong,
+    # "NumAdj": Tag.count('A'),
+    # "NumCoordinate": Tag.count('C'),
+    # "NumPrep": Tag.count('E'),
+    # "NumInterject": Tag.count('I'),
+    # "NumDeter":Tag.count('L'),
+    # "NumNumeral": Tag.count('M'),
+    # "NumNoun": Tag.count('N'),
+    # "NumNoun_classifier":Tag.count('Nc'),
+    # "NumNoun_abberev": Tag.count('Ny'),
+    # "NumNoun_prop":Tag.count('Np'),
+    # "NumNoun_unit":Tag.count('Nu'),
+    # "NumPronoun":Tag.count('P'),
+    # "NumAdv":Tag.count('R'),
+    # "NumSubor":Tag.count('S'),
+    # "NumAu_Modal":Tag.count('T'),
+    # "NumVerb":Tag.count('V'),
+    # "NumUnknown":Tag.count('X'),
+    # "NumPunc":Tag.count('F'),
+}
+
+print(dcitOut)
