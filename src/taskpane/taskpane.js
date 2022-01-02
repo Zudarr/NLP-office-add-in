@@ -64,19 +64,24 @@ function insertTable() {
       ["Name", "ID", "Birth City"],
       ["Bob", "434", "Chicago"],
       ["Sue", "719", "Havana"],
-  ];
+    ];
     secondParagraph.insertTable(3, 3, "After", tableData);
 
     return context.sync();
-  })
-    .catch(function (error) {
-      console.log("Error: " + error);
-      if (error instanceof OfficeExtension.Error) {
-        console.log("Debug info: " + JSON.stringify(error.debugInfo));
-      }
-    });
+  }).catch(function (error) {
+    console.log("Error: " + error);
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
 }
 
-function test(){
-  
+function test() {
+  Word.run(function (context) {
+    var paragraphs = context.document.getSelection().paragraphs;
+    paragraphs.load();
+    return context.sync().then(function () {
+      paragraphs.items[0].insertText(' New sentence in the paragraph.', Word.InsertLocation.end);
+    }).then(context.sync);
+  });
 }
