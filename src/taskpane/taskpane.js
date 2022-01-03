@@ -35,7 +35,7 @@ function readSelectedRange() {
           statisticResult = data.toString();
         });
         doc.body.insertParagraph(statisticResult, "End");
-        //doc.body.insertParagraph(text,'End');
+        //doc.body.insertParagraph(text, "End");
       })
       .then(context.sync);
   }).catch(function (error) {
