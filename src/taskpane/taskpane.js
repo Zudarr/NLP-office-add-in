@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
@@ -7,12 +8,11 @@
 
 Office.onReady((info) => {
   // Determine if the user's version of Office supports all the Office.js APIs that are used in the tutorial.
-  if (!Office.context.requirements.isSetSupported('WordApi', '1.3')) {
-    console.log('Sorry. The tutorial add-in uses Word.js APIs that are not available in your version of Office.');
+  if (!Office.context.requirements.isSetSupported("WordApi", "1.3")) {
+    console.log("Sorry. The tutorial add-in uses Word.js APIs that are not available in your version of Office.");
   }
 
   // Assign event handlers and other initialization logic.
-  document.getElementById("insert-paragraph").onclick = insertParagraph;
   document.getElementById("test").onclick = test;
   if (info.host === Office.HostType.Word) {
     document.getElementById("sideload-msg").style.display = "none";
@@ -24,12 +24,16 @@ function test() {
   Word.run(function (context) {
     var paragraphs = context.document.getSelection().paragraphs;
     paragraphs.load();
-
-  })
-    .catch(function (error) {
-      console.log("Error: " + error);
-      if (error instanceof OfficeExtension.Error) {
-        console.log("Debug info: " + JSON.stringify(error.debugInfo));
-      }
-    });
+    return context
+      .sync()
+      .then(function () {
+        paragraphs.InsertText("./text.txt", Word.InsertLocation.end);
+      })
+      .then(context.sync);
+  }).catch(function (error) {
+    console.log("Error: " + error);
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  });
 }
