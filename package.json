@@ -26,12 +26,12 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "core-js": "^3.9.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "regenerator-runtime": "^0.13.7"
   },
-  "browser":{
-    "child_process": false
-  },  
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.12.11",
@@ -66,5 +66,4 @@
   "browserslist": [
     "ie 11"
   ]
-  
 }

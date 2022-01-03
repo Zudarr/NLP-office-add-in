@@ -6,7 +6,7 @@ from pyvi import ViPosTagger
 import string
 import matplotlib.pyplot as plt
 import numpy as np
-
+import sys
 
 #Lấy danh sách stopword tiếng việt
 stop_word = []
@@ -17,9 +17,7 @@ with open ("vi-stopwords.txt",encoding= 'UTF-8') as file_in:
     file_in.close()
 punc = list(punctuation)
 #Xử lý dữ liệu tiếng việt qua thư viện
-with open("text.txt" ,encoding='UTF8') as file:
-    Data = file.read() #input, Biến tên Data là input của cả bài toán
-file.close()
+Data = sys.argv[1]
 
 
 text_lower = Data.lower()#chuyển data sang viết thường toàn bộ
@@ -156,77 +154,4 @@ print('Number of Verb: ', Tag.count('V'))
 print('Number of Unknown: ', Tag.count('X'))
 print('Number of Filtered out (punctuation): ', Tag.count('F'))
 
-#output
-dcitOut = {
-    "NumParagraph" : countParagraph,
-    "NumSentence" : countSentence,
-    "NumWord" : len(Data_NonPunc),
-    "NumWord_NonSTW": len(Data_NonStopWord),
-    "NumWord_Diff": len(Data_UnIdentical),
-    "NumWord_Diff_NonSTW": len(Data_NonStw_UnIdentical),
-    "WordPerSent": round(len(Data_NonPunc)/countSentence, 2),
-    "NumChar":len(Data_temp),
-    "NumChar_NonPunc": len(Data_temp1),
-    "CharPerWord": round(len(Data_temp1)/len(Data_NonPunc),2),
-    "NumSac": sac,
-    "NumHuyen": huyen,
-    "NumHoi": hoi,
-    "NumNga": nga,
-    "NumNang": nang,
-    "LongWord": countLong,
-    "NumAdj": Tag.count('A'),
-    "NumCoordinate": Tag.count('C'),
-    "NumPrep": Tag.count('E'),
-    "NumInterject": Tag.count('I'),
-    "NumDeter":Tag.count('L'),
-    "NumNumeral": Tag.count('M'),
-    "NumNoun": Tag.count('N'),
-    "NumNoun_classifier":Tag.count('Nc'),
-    "NumNoun_abberev": Tag.count('Ny'),
-    "NumNoun_prop":Tag.count('Np'),
-    "NumNoun_unit":Tag.count('Nu'),
-    "NumPronoun":Tag.count('P'),
-    "NumAdv":Tag.count('R'),
-    "NumSubor":Tag.count('S'),
-    "NumAu_Modal":Tag.count('T'),
-    "NumVerb":Tag.count('V'),
-    "NumUnknown":Tag.count('X'),
-    "NumPunc":Tag.count('F'),
-}
-# f = open('output.txt', 'w')
-# f.write('Number of paragraphs: '+ str(countParagraph)+'\n')
-# f.write('Number of sentences: '+ str(countSentence)+'\n')
-# f.write('Total wordl count:'+ str(len(Data_NonPunc))+'\n')
-# f.write('Number of different word: '+str(len(Data_UnIdentical))+'\n')
-# f.write('Different words (Excluding common words):'+ str(len(Data_NonStw_UnIdentical))+'\n')
-
-# f.write('Words per sentence: '+str(round(len(Data_NonPunc)/countSentence, 2) )+'\n')
-
-# f.write('So dau sac: '+ str(sac)+'\n')
-# f.write('So dau huyen: '+ str(huyen)+'\n')
-# f.write('So dau hoi: '+ str(hoi)+'\n')
-# f.write('So dau nga: '+ str(nga)+'\n')
-# f.write('So dau nang: '+ str(nang)+'\n')
-# f.write('Number of characters (All):'+str(len(Data_temp))+'\n')
-# f.write('Number of characters (Non punctuation):'+str(len(Data_temp1))+'\n')
-# f.write('Characters per word: '+str(round(len(Data_temp1)/len(Data_NonPunc),2))+'\n')
-# f.write ('Number of long word (Have more than 5 character): '+ str(countLong)+'\n')
-# f.write('Number of Adjective: '+ str(Tag.count('A'))+'\n')
-# f.write('Number of Coordinating conjunction: '+ str(Tag.count('C'))+'\n')
-# f.write('Number of Preposition: '+ str(Tag.count('E'))+'\n')
-# f.write('Number of Interjection: '+ str(Tag.count('I'))+'\n')
-# f.write('Number of Determiner: '+ str(Tag.count('L'))+'\n')
-# f.write('Number of Numeral: '+ str(Tag.count('M'))+'\n')
-# f.write('Number of Common noun: '+ str(Tag.count('N'))+'\n')
-# f.write('Number of Noun Classifier: '+ str(Tag.count('Nc'))+'\n')
-# f.write('Number of Noun abbreviation: '+ str(Tag.count('Ny'))+'\n')
-# f.write('Number of Proper noun: '+ str(Tag.count('Np'))+'\n')
-# f.write('Number of Unit noun: '+ str(Tag.count('Nu'))+'\n')
-# f.write('Number of Pronoun: '+ str(Tag.count('P'))+'\n')
-# f.write('Number of Adverb: '+ str(Tag.count('R'))+'\n')
-# f.write('Number of Subordinating conjunction: '+ str(Tag.count('S'))+'\n')
-# f.write('Number of Auxiliary, modal words: '+ str(Tag.count('T'))+'\n')
-# f.write('Number of Verb: '+ str(Tag.count('V'))+'\n')
-# f.write('Number of Unknown: '+ str(Tag.count('X'))+'\n')
-# f.write('Number of Filtered out (punctuation): '+ str(Tag.count('F'))+'\n')
-# f.close()
+sys.stdout.flush()

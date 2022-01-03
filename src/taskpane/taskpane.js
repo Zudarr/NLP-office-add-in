@@ -1,5 +1,6 @@
-/* eslint-disable no-redeclare */
-/* eslint-disable no-undef */
+import * as React from "react";
+import axios from "axios"
+
 Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
     if (!Office.context.requirements.isSetSupported("WordApi", "1.3")) {
@@ -12,6 +13,7 @@ Office.onReady((info) => {
 });
 
 function readSelectedRange() {
+  const [data, setData] = React.useState({});
   Word.run(function (context) {
     var doc = context.document;
     // load entire text of document body
@@ -28,14 +30,9 @@ function readSelectedRange() {
         } else {
           var text = wholeDoc.text;
         }
-        var statisticResult = "";
-        var child_process = require("child_process").spawn;
-        var process = child_process("python", ["../PythonCode/NLP.py", text]);
-        process.stdout.on("data", (data) => {
-          statisticResult = data.toString();
-        });
-        doc.body.insertParagraph(statisticResult, "End");
-        //doc.body.insertParagraph(text, "End");
+        const newData = await getData(documentBody.text);
+        setData(newData);
+        doc.body.insertParagraph(data.toString(),"End");
       })
       .then(context.sync);
   }).catch(function (error) {
@@ -45,3 +42,20 @@ function readSelectedRange() {
     }
   });
 }
+
+const getData = async (content) => {
+  const form = new FormData();
+  form.append("text", content);
+  const data = await axios
+    .post("http://127.0.0.1:5000/", form, {
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Credentials": "true",
+      },
+    })
+    .then((res) => res.data);
+  return data;
+};
