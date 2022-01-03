@@ -25,6 +25,9 @@
     "validate": "office-addin-manifest validate manifest.xml",
     "watch": "webpack --mode development --watch"
   },
+  "browser":{
+    "child_process": false
+  },
   "dependencies": {
     "child": "^0.0.3",
     "core-js": "^3.9.1",
