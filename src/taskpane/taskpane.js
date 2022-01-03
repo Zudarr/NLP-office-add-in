@@ -7,7 +7,7 @@ Office.onReady((info) => {
     }
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
-    document.getElementById("read selected-range").onclick = readSelectedRange;
+    document.getElementById("read-selected-range").onclick = readSelectedRange;
   }
 });
 
