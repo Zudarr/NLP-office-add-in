@@ -25,15 +25,18 @@
     "validate": "office-addin-manifest validate manifest.xml",
     "watch": "webpack --mode development --watch"
   },
-  "browser":{
-    "child_process": false
+  "browser": {
+    "child_process": false,
+    "fs": false,
+    "path": false,
+    "os": false
   },
   "dependencies": {
     "child": "^0.0.3",
     "core-js": "^3.9.1",
     "ejs": "^3.1.6",
     "regenerator-runtime": "^0.13.7",
-    "require": "^2.4.20",
+    "require": "^0.4.4",
     "vntk": "^1.4.4"
   },
   "devDependencies": {

@@ -24,14 +24,14 @@ Office.onReady((info) => {
 
 function test() {
   Word.run(function (context) {
-    var paragraphs = context.document.body.paragraphs;
-    paragraphs.load();
-    return context
-      .sync()
-      .then(function () {
-        paragraphs.InsertText("../src/PythonCode/output.txt", Word.InsertLocation.end);
-      })
-      .then(context.sync);
+    var content;
+    fs.readFile("output.txt", function read(err, data) {
+      if (err) {
+        throw err;
+      }
+      content = data;
+    });
+    context.document.body.insertParagraph(content, "End");
   }).catch(function (error) {
     console.log("Error: " + error);
     if (error instanceof OfficeExtension.Error) {
