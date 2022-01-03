@@ -22,12 +22,12 @@ Office.onReady((info) => {
 
 function test() {
   Word.run(function (context) {
-    var paragraphs = context.document.getSelection().paragraphs;
+    var paragraphs = context.document.body.paragraphs;
     paragraphs.load();
     return context
       .sync()
       .then(function () {
-        paragraphs.InsertText("./text.txt", Word.InsertLocation.end);
+        paragraphs.InsertText("../src/PythonCode/output.txt", Word.InsertLocation.end);
       })
       .then(context.sync);
   }).catch(function (error) {
