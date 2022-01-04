@@ -30,7 +30,7 @@ function readSelectedRange() {
         }
         const data = await getData(text);
         Object.keys(data).forEach(key => {
-          doc.body.insertParagraph(key.toString() + ":" + data[key].toString(), "End");
+          doc.body.insertParagraph(key.toString() + ": " + data[key].toString(), "End");
         });
         
       })
