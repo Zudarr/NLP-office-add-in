@@ -1,4 +1,3 @@
-import * as React from "react";
 import axios from "axios"
 
 Office.onReady((info) => {
@@ -12,8 +11,7 @@ Office.onReady((info) => {
   }
 });
 
-function readSelectedRange() {
-  const [data, setData] = React.useState({});
+function readSelectedRange() {  
   Word.run(function (context) {
     var doc = context.document;
     // load entire text of document body
@@ -24,15 +22,14 @@ function readSelectedRange() {
     selectedRange.load("text");
     return context
       .sync()
-      .then(function () {
+      .then(async function () {
         if (selectedRange.text != "") {
           var text = selectedRange.text;
         } else {
           var text = wholeDoc.text;
         }
-        const newData = await getData(documentBody.text);
-        setData(newData);
-        doc.body.insertParagraph(data.toString(),"End");
+        const data = await getData(text);
+        doc.body.insertParagraph(data,"End");
       })
       .then(context.sync);
   }).catch(function (error) {

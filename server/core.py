@@ -1,25 +1,19 @@
 from string import punctuation
-from typing import Counter
 from pyvi import ViTokenizer
 from pyvi import ViUtils
 from pyvi import ViPosTagger
 import string
-import matplotlib.pyplot as plt
-import numpy as np
 
-def All(Data):
+def Statistic(Data):
     #Lấy danh sách stopword tiếng việt
     stop_word = []
-    with open ("vi-stopwords.txt",encoding= 'UTF-8') as file_in:
+    with open ("vi-stopwords.txt",encoding = 'UTF-8') as file_in:
         text = file_in.read()
         for word in text.split():
             stop_word.append(word)
         file_in.close()
     punc = list(punctuation)
     #Xử lý dữ liệu tiếng việt qua thư viện
-    # with open("text.txt" ,encoding='UTF8') as file:
-    #     Data = file.read() #input, Biến tên Data là input của cả bài toán
-    # file.close()
 
 
     text_lower = Data.lower()#chuyển data sang viết thường toàn bộ
@@ -112,9 +106,44 @@ def All(Data):
     LenDif =[]
     Temp =  ViPosTagger.postagging(text_token)
     Tag = Temp[1]
-    
+    output = {
+    "NumParagraph" : countParagraph,
+    "NumSentence" : countSentence,
+    "NumWord" : len(Data_NonPunc),
+    "NumWord_NonSTW": len(Data_NonStopWord),
+    "NumWord_Diff": len(Data_UnIdentical),
+    "NumWord_Diff_NonSTW": len(Data_NonStw_UnIdentical),
+    "WordPerSent": round(len(Data_NonPunc)/countSentence, 2),
+    "NumChar":len(Data_temp),
+    "NumChar_NonPunc": len(Data_temp1),
+    "CharPerWord": round(len(Data_temp1)/len(Data_NonPunc),2),
+    "NumSac": sac,
+    "NumHuyen": huyen,
+    "NumHoi": hoi,
+    "NumNga": nga,
+    "NumNang": nang,
+    "LongWord": countLong,
+    "NumAdj": Tag.count('A'),
+    "NumCoordinate": Tag.count('C'),
+    "NumPrep": Tag.count('E'),
+    "NumInterject": Tag.count('I'),
+    "NumDeter":Tag.count('L'),
+    "NumNumeral": Tag.count('M'),
+    "NumNoun": Tag.count('N'),
+    "NumNoun_classifier":Tag.count('Nc'),
+    "NumNoun_abberev": Tag.count('Ny'),
+    "NumNoun_prop":Tag.count('Np'),
+    "NumNoun_unit":Tag.count('Nu'),
+    "NumPronoun":Tag.count('P'),
+    "NumAdv":Tag.count('R'),
+    "NumSubor":Tag.count('S'),
+    "NumAu_Modal":Tag.count('T'),
+    "NumVerb":Tag.count('V'),
+    "NumUnknown":Tag.count('X'),
+    "NumPunc":Tag.count('F'),
+    }
     #output
-    output = list(countParagraph,countSentence,len(Data_NonPunc),len(Data_NonStopWord),round(len(Data_NonPunc)/countSentence, 2),len(Data_temp),round(len(Data_temp1)/len(Data_NonPunc),2),sac,huyen,hoi,nga,nang,Tag.count('A'),Tag.count('C'),Tag.count('E'),Tag.count('I'),Tag.count('L'),Tag.count('M'),Tag.count('N'),Tag.count('Nc'),Tag.count('Ny'),Tag.count('Np'),Tag.count('Nu'),Tag.count('P'),Tag.count('R'),Tag.count('S'),Tag.count('T'),Tag.count('V'),Tag.count('X'),Tag.count('F'))
+    #output = (countParagraph,countSentence,len(Data_NonPunc),len(Data_NonStopWord),round(len(Data_NonPunc)/countSentence, 2),len(Data_temp),round(len(Data_temp1)/len(Data_NonPunc),2),sac,huyen,hoi,nga,nang,Tag.count('A'),Tag.count('C'),Tag.count('E'),Tag.count('I'),Tag.count('L'),Tag.count('M'),Tag.count('N'),Tag.count('Nc'),Tag.count('Ny'),Tag.count('Np'),Tag.count('Nu'),Tag.count('P'),Tag.count('R'),Tag.count('S'),Tag.count('T'),Tag.count('V'),Tag.count('X'),Tag.count('F'))
     return output
     # print('Number of paragraphs: ', countParagraph)
 
@@ -161,42 +190,4 @@ def All(Data):
     # print('Number of Verb: ', Tag.count('V'))
     # print('Number of Unknown: ', Tag.count('X'))
     # print('Number of Filtered out (punctuation): ', Tag.count('F'))
-
-
-#output
-# dcitOut = {
-#     "NumParagraph" : countParagraph,
-#     "NumSentence" : countSentence,
-#     "NumWord" : len(Data_NonPunc),
-#     "NumWord_NonSTW": len(Data_NonStopWord),
-#     "NumWord_Diff": len(Data_UnIdentical),
-#     "NumWord_Diff_NonSTW": len(Data_NonStw_UnIdentical),
-#     "WordPerSent": round(len(Data_NonPunc)/countSentence, 2),
-#     "NumChar":len(Data_temp),
-#     "NumChar_NonPunc": len(Data_temp1),
-#     "CharPerWord": round(len(Data_temp1)/len(Data_NonPunc),2),
-#     "NumSac": sac,
-#     "NumHuyen": huyen,
-#     "NumHoi": hoi,
-#     "NumNga": nga,
-#     "NumNang": nang,
-#     "LongWord": countLong,
-#     "NumAdj": Tag.count('A'),
-#     "NumCoordinate": Tag.count('C'),
-#     "NumPrep": Tag.count('E'),
-#     "NumInterject": Tag.count('I'),
-#     "NumDeter":Tag.count('L'),
-#     "NumNumeral": Tag.count('M'),
-#     "NumNoun": Tag.count('N'),
-#     "NumNoun_classifier":Tag.count('Nc'),
-#     "NumNoun_abberev": Tag.count('Ny'),
-#     "NumNoun_prop":Tag.count('Np'),
-#     "NumNoun_unit":Tag.count('Nu'),
-#     "NumPronoun":Tag.count('P'),
-#     "NumAdv":Tag.count('R'),
-#     "NumSubor":Tag.count('S'),
-#     "NumAu_Modal":Tag.count('T'),
-#     "NumVerb":Tag.count('V'),
-#     "NumUnknown":Tag.count('X'),
-#     "NumPunc":Tag.count('F'),
-# }
+    #output
