@@ -29,7 +29,10 @@ function readSelectedRange() {
           var text = wholeDoc.text;
         }
         const data = await getData(text);
-        doc.body.insertParagraph(data,"End");
+        Object.keys(data).forEach(key => {
+          doc.body.insertParagraph(key.toString() + ":" + data[key].toString(), "End");
+        });
+        
       })
       .then(context.sync);
   }).catch(function (error) {
