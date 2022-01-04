@@ -35,7 +35,7 @@ def Statistic(Data):
             countParagraph +=1
 
     #đếm số câu
-    countSentence = 0
+    countSentence = 1
     for punc in Data_punc:
         if(punc == '.'):
             countSentence +=1
