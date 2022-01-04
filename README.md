@@ -4,7 +4,7 @@
 - Python phiên bản 3.9.0 trở lên (Link: https://www.python.org/downloads/)
 ### Hướng dẫn chạy chương trình
 - Để khởi động client: Điều hướng terminal đến thư mục client, chạy lệnh 'npm start'
-  Allow localhost loopback for Microsoft Edge WebView? (Y/n): Gõ n
+- Allow localhost loopback for Microsoft Edge WebView? (Y/n): Gõ n
 - Để khởi động server: Điều hướng terminal đến thư mục server: chạy lệnh 'python server.py'
 ### Thống kê văn bản
 - Sau khi client đã khỏi động hoàn tất, giao diện MS Word sẽ hiện ra ở góc trên bên phải của màn hình. Bấm vào button 'Show taskpane để khỏi động add-in'
