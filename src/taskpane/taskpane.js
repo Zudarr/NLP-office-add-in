@@ -23,15 +23,18 @@ Office.onReady((info) => {
 });
 
 function test() {
+  var content;
+  var fs = require("fs");
+  fs.readFile("output.txt", function read(err, data) {
+    if (err) {
+      throw err;
+    }
+    content = data;
+  });
   Word.run(function (context) {
-    var content;
-    fs.readFile("output.txt", function read(err, data) {
-      if (err) {
-        throw err;
-      }
-      content = data;
-    });
-    context.document.body.insertParagraph(content, "End");
+    var docBody = context.document.body;
+    docBody.insertParagraph(content, "End");
+    return context.sync();
   }).catch(function (error) {
     console.log("Error: " + error);
     if (error instanceof OfficeExtension.Error) {
@@ -41,32 +44,18 @@ function test() {
 }
 
 function readSelectedRange() {
+  var content;
+  var fs = require("fs");
+  fs.readFile("output.txt", function read(err, data) {
+    if (err) {
+      throw err;
+    }
+    content = data;
+  });
   Word.run(function (context) {
-    var doc = context.document;
-    // load entire text of document body
-    var wholeDoc = doc.body;
-    wholeDoc.load("text");
-    // load text of selected range
-    var selectedRange = doc.getSelection();
-    selectedRange.load("text");
-    return context
-      .sync()
-      .then(function () {
-        if (selectedRange.text != "") {
-          var text = selectedRange.text;
-        } else {
-          var text = wholeDoc.text;
-        }
-        var statisticResult = "";
-        var child_process = require("child_process").spawn;
-        var process = child_process("python", ["../PythonCode/NLP.py", text]);
-        process.stdout.on("data", (data) => {
-          statisticResult = data.toString();
-        });
-        doc.body.insertParagraph(statisticResult, "End");
-        //doc.body.insertParagraph(text, "End");
-      })
-      .then(context.sync);
+    var docBody = context.document.body;
+    docBody.insertParagraph("add something", "End");
+    return context.sync();
   }).catch(function (error) {
     console.log("Error: " + error);
     if (error instanceof OfficeExtension.Error) {
